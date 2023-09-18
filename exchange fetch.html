@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency converter</title>
+</head>
+<body>
+    <HR>
+    <h1 style="text-align: center; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">Currency converter Portal</h1>
+    <HR>
+   
+<DIV style="background-color: aqua;">
+    <fieldset>
+    <label>From:</label>
+    <select id="from">
+        <option value="USD">USD</option>
+        <OPTION value="EUR">EUR</OPTION>
+        <option value="INR">INR</option>
+    </select>
+    <label>To:</label>
+    <select id="to">
+        <option value="USD">USD</option>
+        <OPTION value="EUR">EUR</OPTION>
+        <option value="INR">INR</option>
+    </select>
+    <br><br>
+    <label>Enter Amount to convert</label>
+    <input type="text" id="amount">
+    <br><br>
+    <button onclick="calculate()">Convert</button>
+    <br><br>
+    <label >Result Amount</label>
+    <p id="output"></p>
+</fieldset>
+</DIV>
+<script>
+    
+    function calculate()
+    {
+        var from = document.getElementById('from').value;
+        var to = document.getElementById('to').value;
+        var output = document.getElementById('output');
+        var amount = Number(document.getElementById('amount').value);
+
+        let rates;
+        fetch(`https://api.exchangerate-api.com/v4/latest/${from}`)
+        .then(response=>{
+            return response.json()
+
+        })
+        .then(data => {
+            rates = data.rates[to];
+            let newrate = rates * amount
+            output.innerHTML = amount + " " + from + " is " + newrate + " " + to 
+
+        })
+        
+        
+       
+    }
+</script>
+
+
+
+
+</body>
+</html>
